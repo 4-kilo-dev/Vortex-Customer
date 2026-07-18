@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { Menu } from "lucide-react";
 
 import { Logo, VortexMark } from "@/components/brand/vortex-mark";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -41,54 +42,56 @@ export function SiteHeader() {
               {link.label}
             </Link>
           ))}
-          <Button asChild size="sm" className="ml-3">
+          <ThemeToggle className="ml-1" />
+          <Button asChild size="sm" className="ml-2">
             <Link to="/contact">Get a quote</Link>
           </Button>
         </nav>
 
-        {/* Mobile: sheet menu */}
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              aria-label="Open menu"
-            >
-              <Menu className="size-5" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent aria-describedby={undefined}>
-            <SheetTitle className="sr-only">Navigation menu</SheetTitle>
-            <SheetDescription className="sr-only">
-              Site navigation links
-            </SheetDescription>
-            <div className="mb-8 flex items-center gap-2">
-              <VortexMark className="size-8" />
-              <span className="font-heading text-base font-extrabold">
-                VORTE<span className="text-yellow">X</span> VISUAL
-              </span>
-            </div>
-            <nav aria-label="Mobile" className="flex flex-col gap-1">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  onClick={() => setOpen(false)}
-                  className="rounded-md px-3 py-3 font-heading text-lg font-bold text-foreground transition-colors hover:bg-muted [&.active]:text-yellow"
-                  activeOptions={{ exact: link.to === "/" }}
-                >
-                  {link.label}
+        <div className="flex items-center gap-1 md:hidden">
+          <ThemeToggle />
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label="Open menu"
+              >
+                <Menu className="size-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent aria-describedby={undefined}>
+              <SheetTitle className="sr-only">Navigation menu</SheetTitle>
+              <SheetDescription className="sr-only">
+                Site navigation links
+              </SheetDescription>
+              <div className="mb-8 flex items-center gap-2">
+                <VortexMark className="size-8" />
+                <span className="font-heading text-base font-extrabold">
+                  VORTE<span className="text-yellow">X</span> VISUAL
+                </span>
+              </div>
+              <nav aria-label="Mobile" className="flex flex-col gap-1">
+                {NAV_LINKS.map((link) => (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    onClick={() => setOpen(false)}
+                    className="rounded-md px-3 py-3 font-heading text-lg font-bold text-foreground transition-colors hover:bg-muted [&.active]:text-yellow"
+                    activeOptions={{ exact: link.to === "/" }}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+              <Button asChild className="mt-8">
+                <Link to="/contact" onClick={() => setOpen(false)}>
+                  Get a quote
                 </Link>
-              ))}
-            </nav>
-            <Button asChild className="mt-8">
-              <Link to="/contact" onClick={() => setOpen(false)}>
-                Get a quote
-              </Link>
-            </Button>
-          </SheetContent>
-        </Sheet>
+              </Button>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   );

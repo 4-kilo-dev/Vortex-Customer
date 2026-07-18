@@ -10,6 +10,7 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { WhatsAppButton } from '@/components/whatsapp-button'
+import { ThemeProvider, themeInitScript } from '@/lib/theme'
 import { CONTACT, SITE_NAME, SITE_TAGLINE, SITE_URL, SOCIALS } from '@/lib/site'
 
 import appCss from '../styles.css?url'
@@ -35,7 +36,6 @@ export const Route = createRootRoute({
       { name: 'theme-color', content: '#1D1E22' },
     ],
     links: [
-      // Fonts loaded via <link> per Tailwind v4 guidance (no CSS @import).
       { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
       {
         rel: 'preconnect',
@@ -62,21 +62,24 @@ export const Route = createRootRoute({
 
 function RootLayout() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <SiteHeader />
-      <main className="flex-1">
-        <Outlet />
-      </main>
-      <SiteFooter />
-      <WhatsAppButton />
-    </div>
+    <ThemeProvider>
+      <div className="flex min-h-screen flex-col">
+        <SiteHeader />
+        <main className="flex-1">
+          <Outlet />
+        </main>
+        <SiteFooter />
+        <WhatsAppButton />
+      </div>
+    </ThemeProvider>
   )
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <HeadContent />
       </head>
       <body>

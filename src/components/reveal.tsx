@@ -6,7 +6,6 @@ const fadeUp: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
 };
 
-/** On-scroll fade-up wrapper. `delay` staggers siblings when needed. */
 export function Reveal({
   children,
   className,
@@ -30,7 +29,6 @@ export function Reveal({
   );
 }
 
-/** Parent container that staggers its `RevealItem` children on scroll. */
 export function RevealGroup({
   children,
   className,

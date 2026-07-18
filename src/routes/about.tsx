@@ -76,7 +76,6 @@ const VALUES = [
   },
 ] as const;
 
-/** PLACEHOLDER team roster — swap names, roles, and photos when provided. */
 const TEAM = [
   { name: "Team Member", role: "Founder & Operations Lead" },
   { name: "Team Member", role: "Head Technician & Rigger" },
@@ -138,10 +137,7 @@ function AboutPage() {
       </Section>
 
       <Section>
-        <SectionHeading
-          eyebrow="Values"
-          title="What we hold ourselves to"
-        />
+        <SectionHeading eyebrow="Values" title="What we hold ourselves to" />
         <RevealGroup className="grid gap-6 md:grid-cols-3">
           {VALUES.map((value) => (
             <RevealItem
@@ -156,7 +152,7 @@ function AboutPage() {
         </RevealGroup>
       </Section>
 
-      <Section className="border-y border-border/60 bg-charcoal-deep" withMotif>
+      <Section className="dark border-y border-border/60 bg-charcoal-deep text-foreground" withMotif>
         <SectionHeading
           eyebrow="Process"
           title="Assess → Spec → Rig → Operate → Support"
@@ -188,7 +184,6 @@ function AboutPage() {
           title="The crew behind the screens"
           lead="Bios and portraits landing soon — placeholders below until the roster is final."
         />
-        {/* PLACEHOLDER team cards — replace with real names, roles, portraits */}
         <RevealGroup className="grid grid-cols-2 gap-5 lg:grid-cols-4">
           {TEAM.map((member, i) => (
             <RevealItem

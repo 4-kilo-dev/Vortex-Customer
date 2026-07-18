@@ -23,7 +23,7 @@ export function Section({
         className,
       )}
     >
-      {withMotif && <Motif className={paper ? "text-charcoal" : "text-paper"} />}
+      {withMotif && <Motif className="text-foreground" />}
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">{children}</div>
     </section>
   );
@@ -40,7 +40,6 @@ export function SectionHeading({
   title: string;
   lead?: string;
   align?: "center" | "left";
-  /** Use "h1" for the page's primary heading (one per page). */
   as?: "h1" | "h2";
 }) {
   return (

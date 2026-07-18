@@ -3,64 +3,87 @@
 
 /*
   Vortex Visual design tokens.
-  Palette mirrors the Sheger brand guide:
-  - Charcoal #1D1E22  → oklch(0.2274 0.0072 277.5)
-  - Yellow   #FFC72C  → oklch(0.8624 0.1642 89.4)
-  - Neutral tint ladder (charcoal mixed toward white at 80/60/40/20%)
-  - Paper off-white for light sections
-  The site is dark-first: :root carries the dark values.
+  Brand: Charcoal #1D1E22 · Yellow #FFC72C
+  Theme classes: .dark (default) and .light on <html>
 */
 :root {
-  /* Brand primitives */
   --charcoal: oklch(0.2274 0.0072 277.5);
   --charcoal-deep: oklch(0.185 0.007 277.5);
   --yellow: oklch(0.8624 0.1642 89.4);
   --paper: oklch(0.9702 0.004 91);
 
-  /* Sheger tint ladder */
-  --neutral-80: oklch(0.4142 0.0055 277.5); /* ~#4A4B4F */
-  --neutral-60: oklch(0.5726 0.0042 277.5); /* ~#77787B */
-  --neutral-40: oklch(0.7264 0.0029 277.5); /* ~#A5A5A8 */
-  --neutral-20: oklch(0.867 0.0016 277.5); /* ~#D2D2D4 */
+  --neutral-80: oklch(0.4142 0.0055 277.5);
+  --neutral-60: oklch(0.5726 0.0042 277.5);
+  --neutral-40: oklch(0.7264 0.0029 277.5);
+  --neutral-20: oklch(0.867 0.0016 277.5);
 
-  /* Semantic tokens (dark-first) */
+  --radius: 0.375rem;
+  --primary: var(--yellow);
+  --primary-foreground: var(--charcoal);
+  --accent: var(--yellow);
+  --accent-foreground: var(--charcoal);
+  --ring: var(--yellow);
+  --destructive: oklch(0.628 0.2077 27.85);
+  --destructive-foreground: oklch(0.985 0 0);
+}
+
+.dark {
   --background: var(--charcoal);
   --foreground: var(--paper);
   --card: oklch(0.2652 0.008 277.5);
   --card-foreground: var(--paper);
   --popover: oklch(0.2652 0.008 277.5);
   --popover-foreground: var(--paper);
-  --primary: var(--yellow);
-  --primary-foreground: var(--charcoal);
   --secondary: oklch(0.3 0.008 277.5);
   --secondary-foreground: var(--paper);
   --muted: oklch(0.2926 0.008 277.5);
   --muted-foreground: var(--neutral-40);
-  --accent: var(--yellow);
-  --accent-foreground: var(--charcoal);
-  --destructive: oklch(0.628 0.2077 27.85);
-  --destructive-foreground: var(--paper);
   --border: oklch(0.34 0.008 277.5);
   --input: oklch(0.34 0.008 277.5);
-  --ring: var(--yellow);
-  --radius: 0.375rem;
 }
 
-/* Light ("paper") section variant — apply .section-paper to a wrapper */
-.section-paper {
+.light {
   --background: var(--paper);
   --foreground: var(--charcoal);
   --card: oklch(1 0 0);
   --card-foreground: var(--charcoal);
   --popover: oklch(1 0 0);
   --popover-foreground: var(--charcoal);
-  --secondary: oklch(0.93 0.004 91);
+  --secondary: oklch(0.94 0.004 91);
   --secondary-foreground: var(--charcoal);
-  --muted: oklch(0.93 0.004 91);
+  --muted: oklch(0.94 0.004 91);
   --muted-foreground: var(--neutral-60);
-  --border: oklch(0.885 0.003 277.5);
-  --input: oklch(0.885 0.003 277.5);
+  --border: oklch(0.88 0.004 277.5);
+  --input: oklch(0.88 0.004 277.5);
+}
+
+/* Alternating section — lifted surface in both themes */
+.section-paper {
+  background-color: var(--card);
+  color: var(--foreground);
+}
+
+.dark .section-paper {
+  --background: oklch(0.255 0.008 277.5);
+  --foreground: var(--paper);
+  --card: oklch(0.285 0.008 277.5);
+  --card-foreground: var(--paper);
+  --muted: oklch(0.3 0.008 277.5);
+  --muted-foreground: var(--neutral-40);
+  --border: oklch(0.36 0.008 277.5);
   background-color: var(--background);
+  color: var(--foreground);
+}
+
+.light .section-paper {
+  --background: var(--paper);
+  --foreground: var(--charcoal);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--charcoal);
+  --muted: oklch(0.94 0.004 91);
+  --muted-foreground: var(--neutral-60);
+  --border: oklch(0.88 0.004 277.5);
+  background-color: oklch(0.985 0.003 91);
   color: var(--foreground);
 }
 

@@ -5,7 +5,6 @@ import { Logo } from "@/components/brand/vortex-mark";
 import { Motif } from "@/components/brand/motif";
 import { CONTACT, SITE_NAME, SOCIALS } from "@/lib/site";
 
-/** Simple TikTok glyph — lucide has no TikTok icon. */
 function TikTokIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
@@ -23,7 +22,7 @@ const FOOTER_NAV = [
 
 export function SiteFooter() {
   return (
-    <footer className="relative overflow-hidden border-t border-border/60 bg-charcoal-deep">
+    <footer className="dark relative overflow-hidden border-t border-border/60 bg-charcoal-deep text-foreground">
       <Motif className="text-paper" />
       <div className="relative mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
         <div>
@@ -56,7 +55,6 @@ export function SiteFooter() {
           <h2 className="font-heading text-sm font-bold uppercase tracking-widest text-neutral-40">
             Contact
           </h2>
-          {/* PLACEHOLDER contact details — configured in src/lib/site.ts */}
           <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
             <li className="flex items-center gap-2">
               <Phone className="size-4 text-yellow" aria-hidden />
@@ -76,7 +74,6 @@ export function SiteFooter() {
             </li>
           </ul>
           <div className="mt-5 flex items-center gap-3">
-            {/* PLACEHOLDER social URLs — configured in src/lib/site.ts */}
             <a href={SOCIALS.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="text-muted-foreground transition-colors hover:text-yellow">
               <Instagram className="size-5" />
             </a>

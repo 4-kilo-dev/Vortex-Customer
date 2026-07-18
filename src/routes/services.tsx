@@ -6,7 +6,6 @@ import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
 import { SERVICES } from "@/data/services";
 import { pageMeta } from "@/lib/site";
-import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/services")({
   head: () =>
@@ -37,9 +36,7 @@ function ServicesPage() {
             <Reveal key={service.slug}>
               <article
                 id={service.slug}
-                className={cn(
-                  "grid gap-6 rounded-lg border border-border bg-card p-7 md:grid-cols-[1fr_auto] md:items-center md:p-9",
-                )}
+                className="grid gap-6 rounded-lg border border-border bg-card p-7 md:grid-cols-[1fr_auto] md:items-center md:p-9"
               >
                 <div>
                   <div className="flex items-center gap-4">

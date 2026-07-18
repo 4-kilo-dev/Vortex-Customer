@@ -4,6 +4,9 @@ Marketing site for Vortex Visual (LED screen rental and LED screen sales).
 Built with TanStack Start, Tailwind CSS v4, framer-motion,
 react-hook-form + zod, and shadcn-style UI primitives.
 
+Theme: dark by default; toggle light/dark via the header control
+(persisted as `vortex-theme` in localStorage).
+
 ## Getting started
 
 ```bash

@@ -62,9 +62,8 @@ const VALUES = [
 function Home() {
   return (
     <>
-      {/* Hero — the one anchored animation on the site */}
       <section className="relative overflow-hidden">
-        <Motif className="text-paper" />
+        <Motif className="text-foreground" />
         <div className="relative mx-auto flex max-w-6xl flex-col items-center px-4 pb-20 pt-16 text-center sm:px-6 md:pb-28 md:pt-24">
           <motion.div
             initial={{ opacity: 0, scale: 0.85, rotate: -30 }}
@@ -109,7 +108,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Services */}
       <Section className="border-t border-border/60">
         <SectionHeading
           eyebrow="What we do"
@@ -153,7 +151,6 @@ function Home() {
         </Reveal>
       </Section>
 
-      {/* Featured work */}
       <Section paper withMotif>
         <SectionHeading
           eyebrow="Recent deployments"
@@ -196,7 +193,6 @@ function Home() {
         </Reveal>
       </Section>
 
-      {/* Testimonials */}
       <Section>
         <SectionHeading eyebrow="Client words" title="On the record" />
         <Reveal>
@@ -204,8 +200,7 @@ function Home() {
         </Reveal>
       </Section>
 
-      {/* Brand values strip */}
-      <Section className="border-y border-border/60 bg-charcoal-deep" withMotif>
+      <Section className="dark border-y border-border/60 bg-charcoal-deep text-foreground" withMotif>
         <RevealGroup className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {VALUES.map((value) => (
             <RevealItem key={value.title} className="text-center">
@@ -219,7 +214,6 @@ function Home() {
         </RevealGroup>
       </Section>
 
-      {/* CTA band */}
       <Section>
         <Reveal className="rounded-xl border border-yellow/30 bg-card p-10 text-center md:p-16">
           <ShieldCheck className="mx-auto size-8 text-yellow" aria-hidden />
