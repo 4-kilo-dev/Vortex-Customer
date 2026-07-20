@@ -18,6 +18,7 @@ import { Section, SectionHeading } from "@/components/section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
 import { pageMeta } from "@/lib/site";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/about")({
   head: () =>
@@ -76,6 +77,66 @@ const VALUES = [
   },
 ] as const;
 
+function ProcessTree() {
+  return (
+    <div className="process-tree">
+      <div aria-hidden className="process-tree__spine" />
+
+      {PROCESS.map((phase, i) => {
+        const isRight = i % 2 === 0;
+        const step = String(i + 1).padStart(2, "0");
+
+        return (
+          <RevealItem key={phase.step} className="process-tree__row">
+            <div className="process-tree__node-col">
+              <span
+                aria-hidden
+                className={cn(
+                  "process-tree__branch",
+                  isRight
+                    ? "process-tree__branch--right"
+                    : "process-tree__branch--left",
+                )}
+              />
+              <span className="process-tree__node" />
+            </div>
+
+            <div
+              className={cn(
+                "process-tree__card-col",
+                isRight
+                  ? "process-tree__card-col--right"
+                  : "process-tree__card-col--left",
+              )}
+            >
+              <div className="pro-panel pro-panel--interactive p-5 md:p-6">
+                <div className="flex items-start gap-4">
+                  <span className="process-tree__step-num">{step}</span>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <phase.icon
+                        className="size-5 shrink-0 text-yellow"
+                        aria-hidden
+                      />
+                      <h3 className="font-heading text-base font-bold md:text-lg">
+                        {phase.step}
+                      </h3>
+                    </div>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {phase.text}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </RevealItem>
+        );
+      })}
+    </div>
+  );
+}
+
+/** PLACEHOLDER team roster — swap names, roles, and photos when provided. */
 const TEAM = [
   { name: "Team Member", role: "Founder & Operations Lead" },
   { name: "Team Member", role: "Head Technician & Rigger" },
@@ -113,8 +174,8 @@ function AboutPage() {
       </Section>
 
       <Section paper>
-        <div className="grid gap-8 md:grid-cols-2">
-          <Reveal className="rounded-lg border border-border bg-card p-8">
+        <div className="grid gap-6 md:grid-cols-2">
+          <Reveal className="pro-panel pro-panel--interactive flex h-full flex-col p-8">
             <Target className="size-7 text-yellow" aria-hidden />
             <h2 className="mt-4 text-xl font-bold">Mission</h2>
             <p className="mt-3 text-muted-foreground">
@@ -123,7 +184,10 @@ function AboutPage() {
               guaranteed to perform when the audience is watching.
             </p>
           </Reveal>
-          <Reveal delay={0.1} className="rounded-lg border border-border bg-card p-8">
+          <Reveal
+            delay={0.1}
+            className="pro-panel pro-panel--interactive flex h-full flex-col p-8"
+          >
             <Eye className="size-7 text-yellow" aria-hidden />
             <h2 className="mt-4 text-xl font-bold">Vision</h2>
             <p className="mt-3 text-muted-foreground">
@@ -140,41 +204,29 @@ function AboutPage() {
         <SectionHeading eyebrow="Values" title="What we hold ourselves to" />
         <RevealGroup className="grid gap-6 md:grid-cols-3">
           {VALUES.map((value) => (
-            <RevealItem
-              key={value.title}
-              className="rounded-lg border border-border bg-card p-7"
-            >
-              <value.icon className="size-7 text-yellow" aria-hidden />
-              <h3 className="mt-4 text-lg font-bold">{value.title}</h3>
-              <p className="mt-3 text-sm text-muted-foreground">{value.text}</p>
+            <RevealItem key={value.title}>
+              <div className="pro-panel pro-panel--interactive flex h-full flex-col p-7">
+                <value.icon className="size-7 text-yellow" aria-hidden />
+                <h3 className="mt-4 text-lg font-bold">{value.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {value.text}
+                </p>
+              </div>
             </RevealItem>
           ))}
         </RevealGroup>
       </Section>
 
-      <Section className="dark border-y border-border/60 bg-charcoal-deep text-foreground" withMotif>
+      <Section
+        className="dark border-y border-border/60 bg-charcoal-deep text-foreground"
+        withMotif
+      >
         <SectionHeading
-          eyebrow="Process"
-          title="Assess → Spec → Rig → Operate → Support"
+          title="Process"
           lead="Five stages, no surprises. You always know where your screen is."
         />
-        <RevealGroup className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-          {PROCESS.map((phase, i) => (
-            <RevealItem key={phase.step} className="relative">
-              <div className="flex h-full flex-col rounded-lg border border-border bg-card p-5">
-                <span className="font-heading text-xs font-bold text-muted-foreground">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <phase.icon className="mt-3 size-6 text-yellow" aria-hidden />
-                <h3 className="mt-3 font-heading text-base font-bold">
-                  {phase.step}
-                </h3>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                  {phase.text}
-                </p>
-              </div>
-            </RevealItem>
-          ))}
+        <RevealGroup>
+          <ProcessTree />
         </RevealGroup>
       </Section>
 
@@ -184,26 +236,30 @@ function AboutPage() {
           title="The crew behind the screens"
           lead="Bios and portraits landing soon — placeholders below until the roster is final."
         />
-        <RevealGroup className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+        <RevealGroup className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           {TEAM.map((member, i) => (
-            <RevealItem
-              key={`${member.role}-${i}`}
-              className="rounded-lg border border-border bg-card p-6 text-center"
-            >
-              <span className="mx-auto flex size-20 items-center justify-center rounded-full bg-muted">
-                <UserRound className="size-9 text-muted-foreground" aria-hidden />
-              </span>
-              <h3 className="mt-4 font-heading text-sm font-bold">
-                {member.name}
-              </h3>
-              <p className="mt-1 text-xs text-muted-foreground">{member.role}</p>
+            <RevealItem key={`${member.role}-${i}`}>
+              <div className="pro-panel pro-panel--interactive flex h-full flex-col items-center p-6 text-center">
+                <span className="flex size-20 items-center justify-center rounded-lg bg-muted">
+                  <UserRound
+                    className="size-9 text-muted-foreground"
+                    aria-hidden
+                  />
+                </span>
+                <h3 className="mt-4 font-heading text-sm font-bold">
+                  {member.name}
+                </h3>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {member.role}
+                </p>
+              </div>
             </RevealItem>
           ))}
         </RevealGroup>
       </Section>
 
       <Section className="pt-0">
-        <Reveal className="rounded-xl border border-yellow/30 bg-card p-10 text-center">
+        <Reveal className="pro-panel pro-panel--accent p-10 text-center">
           <h2 className="text-2xl font-extrabold md:text-3xl">
             Want this crew handling your screen?
           </h2>

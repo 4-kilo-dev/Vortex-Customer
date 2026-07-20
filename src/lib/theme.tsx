@@ -9,12 +9,15 @@ import {
 
 export type Theme = "light" | "dark";
 
+/** Screen coordinates the theme switch should visually expand from. */
+export type ThemeOrigin = { x: number; y: number };
+
 const STORAGE_KEY = "vortex-theme";
 
 type ThemeContextValue = {
   theme: Theme;
-  setTheme: (theme: Theme) => void;
-  toggleTheme: () => void;
+  setTheme: (theme: Theme, origin?: ThemeOrigin) => void;
+  toggleTheme: (origin?: ThemeOrigin) => void;
 };
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
@@ -24,6 +27,62 @@ function applyTheme(theme: Theme) {
   root.classList.remove("light", "dark");
   root.classList.add(theme);
   root.style.colorScheme = theme;
+}
+
+/**
+ * Applies the theme with a transition:
+ * - View Transitions API → circular reveal expanding from `origin`
+ * - otherwise → brief CSS color cross-fade (.theme-fade)
+ * - prefers-reduced-motion → instant switch
+ */
+function applyThemeAnimated(theme: Theme, origin?: ThemeOrigin) {
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  if (reduceMotion) {
+    applyTheme(theme);
+    return;
+  }
+
+  const doc = document as Document & {
+    startViewTransition?: (cb: () => void) => { ready: Promise<void> };
+  };
+
+  if (origin && typeof doc.startViewTransition === "function") {
+    const transition = doc.startViewTransition(() => applyTheme(theme));
+    const { x, y } = origin;
+    const radius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y),
+    );
+    transition.ready
+      .then(() => {
+        document.documentElement.animate(
+          {
+            clipPath: [
+              `circle(0px at ${x}px ${y}px)`,
+              `circle(${radius}px at ${x}px ${y}px)`,
+            ],
+          },
+          {
+            duration: 550,
+            easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+            pseudoElement: "::view-transition-new(root)",
+          },
+        );
+      })
+      .catch(() => {
+        /* transition skipped (e.g. rapid toggling) — theme is applied anyway */
+      });
+    return;
+  }
+
+  // Fallback: transition colors on everything for a moment.
+  const root = document.documentElement;
+  root.classList.add("theme-fade");
+  applyTheme(theme);
+  window.setTimeout(() => root.classList.remove("theme-fade"), 450);
 }
 
 function readStoredTheme(): Theme {
@@ -56,9 +115,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     applyTheme(initial);
   }, []);
 
-  const setTheme = useCallback((next: Theme) => {
+  const setTheme = useCallback((next: Theme, origin?: ThemeOrigin) => {
     setThemeState(next);
-    applyTheme(next);
+    applyThemeAnimated(next, origin);
     try {
       localStorage.setItem(STORAGE_KEY, next);
     } catch {
@@ -66,9 +125,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const toggleTheme = useCallback(() => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  }, [setTheme, theme]);
+  const toggleTheme = useCallback(
+    (origin?: ThemeOrigin) => {
+      setTheme(theme === "dark" ? "light" : "dark", origin);
+    },
+    [setTheme, theme],
+  );
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>

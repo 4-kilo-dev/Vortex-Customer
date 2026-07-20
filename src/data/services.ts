@@ -49,12 +49,43 @@ export const SERVICES: Array<Service> = [
 /** Services highlighted on the home page (both of them). */
 export const FEATURED_SERVICES = SERVICES;
 
-/** Where our screens end up — used for the home use-case tiles. */
-export const USE_CASES = [
-  "Concerts & Festivals",
-  "Weddings & Ceremonies",
-  "Conferences & Summits",
-  "Churches & Worship",
-  "Sports & Public Screenings",
-  "Retail & Outdoor Advertising",
-] as const;
+export type UseCase = {
+  title: string;
+  blurb: string;
+  /** Lucide icon name key — resolved in the marquee component. */
+  icon: "music" | "heart" | "mic" | "church" | "trophy" | "store";
+};
+
+/** Where our screens end up — used for the home use-case marquee. */
+export const USE_CASES: Array<UseCase> = [
+  {
+    title: "Concerts & Festivals",
+    blurb: "Main-stage walls, side screens, and IMAG for live crowds.",
+    icon: "music",
+  },
+  {
+    title: "Weddings & Ceremonies",
+    blurb: "Backdrop displays and live photo feeds for the big day.",
+    icon: "heart",
+  },
+  {
+    title: "Conferences & Summits",
+    blurb: "Keynote walls, relay screens, and speaker timers.",
+    icon: "mic",
+  },
+  {
+    title: "Churches & Worship",
+    blurb: "Lyrics feeds and sanctuary displays that run every service.",
+    icon: "church",
+  },
+  {
+    title: "Sports & Public Screenings",
+    blurb: "Stadium feeds and open-air screens for thousands of fans.",
+    icon: "trophy",
+  },
+  {
+    title: "Retail & Outdoor Advertising",
+    blurb: "Storefront LEDs and digital billboards that earn daily.",
+    icon: "store",
+  },
+];

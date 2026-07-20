@@ -74,7 +74,7 @@ function ContactPage() {
       <Section className="pt-0">
         <div className="grid gap-10 lg:grid-cols-[1.5fr_1fr]">
           <Reveal>
-            <div className="rounded-lg border border-border bg-card p-6 md:p-8">
+            <div className="pro-panel p-6 md:p-8">
               <InquiryForm defaultService={service} />
             </div>
           </Reveal>

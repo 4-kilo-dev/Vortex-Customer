@@ -140,7 +140,7 @@ export function InquiryForm({
     return (
       <div
         role="status"
-        className="flex flex-col items-center rounded-lg border border-yellow/40 bg-card p-10 text-center"
+        className="pro-panel pro-panel--accent flex flex-col items-center p-10 text-center"
       >
         <CheckCircle2 className="size-10 text-yellow" aria-hidden />
         <h3 className="mt-4 text-xl font-bold">Inquiry received</h3>

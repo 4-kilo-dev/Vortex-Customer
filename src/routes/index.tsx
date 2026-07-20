@@ -15,12 +15,14 @@ import { Section, SectionHeading } from "@/components/section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/reveal";
 import { TestimonialsCarousel } from "@/components/testimonials-carousel";
 import { Button } from "@/components/ui/button";
-import { SERVICES, USE_CASES } from "@/data/services";
+import { UseCasesMarquee } from "@/components/use-cases-marquee";
+import { SERVICES } from "@/data/services";
 import {
   PORTFOLIO_ITEMS,
   portfolioImageUrl,
   portfolioSrcSet,
 } from "@/data/portfolio";
+import { cn } from "@/lib/utils";
 import { pageMeta } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
@@ -59,7 +61,18 @@ const VALUES = [
   },
 ] as const;
 
+/** Stagger offsets — reads like LED panel tiles, not a flat row. */
+const VALUE_OFFSETS = [
+  "md:translate-y-0",
+  "md:translate-y-8",
+  "md:translate-y-2",
+  "md:translate-y-10",
+] as const;
+
 function Home() {
+  const [rental, sales] = SERVICES;
+  const [hero, ...rest] = FEATURED_WORK;
+
   return (
     <>
       <section className="relative overflow-hidden">
@@ -108,75 +121,119 @@ function Home() {
         </div>
       </section>
 
+      {/* Services — overlapping staggered tiles */}
       <Section className="border-t border-border/60">
         <SectionHeading
           eyebrow="What we do"
           title="Rent it for a night, or own it for years"
           lead="Two services, one standard: the screen works, the picture is sharp, and someone qualified is responsible for it."
         />
-        <RevealGroup className="grid gap-6 md:grid-cols-2">
-          {SERVICES.map((service) => (
-            <RevealItem key={service.slug}>
-              <Link
-                to="/services"
-                className="group flex h-full flex-col rounded-lg border border-border bg-card p-8 transition-colors hover:border-yellow"
-              >
-                <service.icon className="size-10 text-yellow" aria-hidden />
-                <h3 className="mt-5 text-2xl font-bold">{service.title}</h3>
-                <p className="mt-3 flex-1 text-muted-foreground">
-                  {service.summary}
-                </p>
-                <span className="mt-6 inline-flex items-center gap-1 font-heading text-sm font-bold uppercase tracking-wide text-yellow">
-                  Learn more <ArrowRight className="size-4" aria-hidden />
-                </span>
-              </Link>
-            </RevealItem>
-          ))}
+        <RevealGroup className="relative mx-auto grid max-w-5xl gap-4 md:grid-cols-12 md:gap-0">
+          <RevealItem className="md:col-span-7 md:row-start-1">
+            <Link
+              to="/services"
+              className="pro-panel pro-panel--interactive group relative z-10 flex h-full min-h-64 flex-col p-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background md:mr-6 md:p-10"
+            >
+              <span className="font-heading text-xs font-bold uppercase tracking-[0.3em] text-yellow">
+                01 — Rental
+              </span>
+              <rental.icon className="mt-5 size-10 text-yellow" aria-hidden />
+              <h3 className="mt-4 text-2xl font-bold md:text-3xl">
+                {rental.title}
+              </h3>
+              <p className="mt-3 max-w-md flex-1 text-muted-foreground">
+                {rental.summary}
+              </p>
+              <span className="mt-6 inline-flex items-center gap-1 font-heading text-sm font-bold uppercase tracking-wide text-yellow">
+                Learn more <ArrowRight className="size-4" aria-hidden />
+              </span>
+            </Link>
+          </RevealItem>
+          <RevealItem className="md:col-span-7 md:col-start-6 md:row-start-1 md:mt-28">
+            <Link
+              to="/services"
+              className="pro-panel pro-panel--accent pro-panel--interactive group relative z-20 flex h-full min-h-64 flex-col p-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background md:ml-6 md:p-10"
+            >
+              <span className="font-heading text-xs font-bold uppercase tracking-[0.3em] text-yellow">
+                02 — Sales
+              </span>
+              <sales.icon className="mt-5 size-10 text-yellow" aria-hidden />
+              <h3 className="mt-4 text-2xl font-bold md:text-3xl">
+                {sales.title}
+              </h3>
+              <p className="mt-3 max-w-md flex-1 text-muted-foreground">
+                {sales.summary}
+              </p>
+              <span className="mt-6 inline-flex items-center gap-1 font-heading text-sm font-bold uppercase tracking-wide text-yellow">
+                Learn more <ArrowRight className="size-4" aria-hidden />
+              </span>
+            </Link>
+          </RevealItem>
         </RevealGroup>
 
-        <Reveal className="mt-12">
-          <p className="mb-5 text-center font-heading text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground">
+        <Reveal className="mt-16 md:mt-24">
+          <p className="mb-8 text-center font-heading text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground">
             Where our screens show up
           </p>
-          <ul className="flex flex-wrap justify-center gap-3">
-            {USE_CASES.map((useCase) => (
-              <li
-                key={useCase}
-                className="rounded-full border border-border px-4 py-2 text-sm font-semibold text-muted-foreground"
-              >
-                {useCase}
-              </li>
-            ))}
-          </ul>
+          <UseCasesMarquee />
         </Reveal>
       </Section>
 
+      {/* Portfolio — asymmetric bento wall */}
       <Section paper withMotif>
         <SectionHeading
           eyebrow="Recent deployments"
           title="Screens we've put up"
           lead="Festival stages, wedding backdrops, digital billboards, and permanent video walls."
         />
-        <RevealGroup className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {FEATURED_WORK.map((item) => (
-            <RevealItem key={item.id}>
+        <RevealGroup className="grid auto-rows-[11rem] grid-cols-2 gap-3 sm:auto-rows-[13rem] sm:gap-4 md:grid-cols-4 md:auto-rows-[14rem]">
+          <RevealItem className="col-span-2 row-span-2">
+            <Link
+              to="/portfolio"
+              className="group relative block h-full overflow-hidden rounded-lg"
+            >
+              <img
+                src={portfolioImageUrl(hero, 1200)}
+                srcSet={portfolioSrcSet(hero)}
+                sizes="(min-width: 768px) 50vw, 100vw"
+                alt={`${hero.title} — ${hero.caption}`}
+                loading="lazy"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <span className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-charcoal-deep/90 via-charcoal-deep/20 to-transparent p-5">
+                <span className="font-heading text-lg font-bold text-paper md:text-xl">
+                  {hero.title}
+                </span>
+                <span className="text-xs text-neutral-20">{hero.category}</span>
+              </span>
+            </Link>
+          </RevealItem>
+          {rest.map((item, i) => (
+            <RevealItem
+              key={item.id}
+              className={cn(
+                i === 0 && "col-span-2 md:col-span-2",
+                i === 3 && "col-span-2 md:col-span-1",
+                i === 4 && "col-span-2 md:col-span-1",
+              )}
+            >
               <Link
                 to="/portfolio"
-                className="group relative block aspect-[4/3] overflow-hidden rounded-lg"
+                className="group relative block h-full overflow-hidden rounded-lg"
               >
                 <img
                   src={portfolioImageUrl(item, 768)}
                   srcSet={portfolioSrcSet(item)}
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  sizes="(min-width: 768px) 25vw, 50vw"
                   alt={`${item.title} — ${item.caption}`}
                   loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <span className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-charcoal-deep/85 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <span className="font-heading font-bold text-paper">
+                <span className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-charcoal-deep/85 to-transparent p-3 opacity-90 transition-opacity group-hover:opacity-100 sm:p-4">
+                  <span className="font-heading text-sm font-bold text-paper sm:text-base">
                     {item.title}
                   </span>
-                  <span className="text-xs text-neutral-20">
+                  <span className="text-[0.65rem] text-neutral-20 sm:text-xs">
                     {item.category}
                   </span>
                 </span>
@@ -200,31 +257,44 @@ function Home() {
         </Reveal>
       </Section>
 
-      <Section className="dark border-y border-border/60 bg-charcoal-deep text-foreground" withMotif>
-        <RevealGroup className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {VALUES.map((value) => (
-            <RevealItem key={value.title} className="text-center">
-              <value.icon className="mx-auto size-7 text-yellow" aria-hidden />
-              <h3 className="mt-3 font-heading text-base font-bold">
-                {value.title}
-              </h3>
-              <p className="mt-2 text-sm text-muted-foreground">{value.text}</p>
+      {/* Values — staggered LED-panel strip */}
+      <Section
+        className="dark border-y border-border/60 bg-charcoal-deep text-foreground"
+        withMotif
+      >
+        <SectionHeading
+          eyebrow="Why Vortex"
+          title="What we hold the line on"
+        />
+        <RevealGroup className="grid gap-4 pb-2 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5 lg:pb-12">
+          {VALUES.map((value, i) => (
+            <RevealItem
+              key={value.title}
+              className={cn("transition-transform", VALUE_OFFSETS[i])}
+            >
+              <div className="pro-panel pro-panel--interactive flex h-full flex-col p-6">
+                <value.icon className="size-7 text-yellow" aria-hidden />
+                <h3 className="mt-4 font-heading text-base font-bold">
+                  {value.title}
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground">{value.text}</p>
+              </div>
             </RevealItem>
           ))}
         </RevealGroup>
       </Section>
 
       <Section>
-        <Reveal className="rounded-xl border border-yellow/30 bg-card p-10 text-center md:p-16">
-          <ShieldCheck className="mx-auto size-8 text-yellow" aria-hidden />
-          <h2 className="mx-auto mt-4 max-w-2xl text-3xl font-extrabold md:text-4xl">
+        <Reveal className="pro-panel pro-panel--accent p-10 text-center md:p-16">
+          <ShieldCheck className="relative mx-auto size-8 text-yellow" aria-hidden />
+          <h2 className="relative mx-auto mt-4 max-w-2xl text-3xl font-extrabold md:text-4xl">
             Have an event date or a wall that needs a screen?
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
+          <p className="relative mx-auto mt-4 max-w-xl text-muted-foreground">
             Tell us the venue and the date, and we&rsquo;ll come back with a
             screen size, a plan, and a quote — usually within one business day.
           </p>
-          <Button asChild size="lg" className="mt-8">
+          <Button asChild size="lg" className="relative mt-8">
             <Link to="/contact">
               Request a quote <ArrowRight aria-hidden />
             </Link>
