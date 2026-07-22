@@ -427,6 +427,16 @@ h6 {
   );
 }
 
+.light .process-tree__spine {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgb(29 30 34 / 0.14) 4%,
+    rgb(29 30 34 / 0.14) 96%,
+    transparent
+  );
+}
+
 @media (min-width: 768px) {
   .process-tree__spine {
     left: 50%;
@@ -468,12 +478,13 @@ h6 {
   height: 0.875rem;
   border-radius: 9999px;
   border: 2px solid var(--yellow);
-  background: var(--charcoal-deep);
+  background: var(--card);
   box-shadow: 0 0 0 4px rgb(255 199 44 / 0.18);
 }
 
 .light .process-tree__node {
   background: var(--paper);
+  box-shadow: 0 0 0 4px rgb(255 199 44 / 0.28);
 }
 
 .process-tree__branch {
@@ -488,6 +499,10 @@ h6 {
     height: 2px;
     background: var(--border);
     transform: translateY(-50%);
+  }
+
+  .light .process-tree__branch {
+    background: rgb(29 30 34 / 0.14);
   }
 
   .process-tree__branch--right {
@@ -529,8 +544,12 @@ h6 {
   font-size: 2.5rem;
   font-weight: 800;
   line-height: 1;
-  color: rgb(255 199 44 / 0.35);
+  color: rgb(255 199 44 / 0.32);
   letter-spacing: -0.04em;
+}
+
+.light .process-tree__step-num {
+  color: rgb(180 130 0 / 0.22);
 }
 
 @media (min-width: 768px) {
@@ -579,4 +598,152 @@ h6 {
   .use-cases-marquee__track--animate {
     animation: none;
   }
+}
+
+/* Why Vortex — horizontal wavy infographic (no card wrapper) */
+.why-infographic {
+  position: relative;
+}
+
+.why-infographic__scroll {
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.why-infographic__canvas {
+  position: relative;
+  min-width: min(100%, 52rem);
+  min-height: 19rem;
+  margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+  .why-infographic__scroll {
+    overflow-x: visible;
+  }
+
+  .why-infographic__canvas {
+    min-width: 100%;
+  }
+}
+
+.why-infographic__wave {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  top: 50%;
+  height: 7.5rem;
+  transform: translateY(-50%);
+  color: var(--foreground);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.light .why-infographic__wave {
+  opacity: 0.72;
+}
+
+.why-infographic__track {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.why-infographic__step {
+  position: relative;
+  min-height: 20rem;
+}
+
+.why-infographic__step--below .why-infographic__node,
+.why-infographic__step--above .why-infographic__node {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.why-infographic__below-copy {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + 2.75rem);
+  display: flex;
+  align-items: flex-end;
+  gap: 0.35rem;
+  width: min(100%, 12rem);
+  transform: translateX(-58%);
+}
+
+.why-infographic__above-copy {
+  position: absolute;
+  left: 50%;
+  bottom: calc(50% + 2.75rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 12rem);
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.why-infographic__step--below .why-infographic__num {
+  flex-shrink: 0;
+  align-self: flex-end;
+  margin-bottom: -0.15rem;
+}
+
+.why-infographic__step--above .why-infographic__num {
+  margin-bottom: 0.35rem;
+}
+
+.why-infographic__node {
+  display: flex;
+  width: 4.5rem;
+  height: 4.5rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: var(--yellow);
+  box-shadow: 0 10px 28px rgb(255 199 44 / 0.28);
+}
+
+.why-infographic__num {
+  font-family: var(--font-heading);
+  font-size: clamp(2.75rem, 4vw, 3.75rem);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--yellow);
+  letter-spacing: -0.04em;
+}
+
+.why-infographic__copy {
+  max-width: 11.5rem;
+}
+
+.why-infographic__step--below .why-infographic__copy {
+  text-align: left;
+}
+
+.why-infographic__step--above .why-infographic__copy {
+  margin-bottom: 0;
+}
+
+.why-infographic__title {
+  font-family: var(--font-heading);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--foreground);
+}
+
+.why-infographic__text {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
 }

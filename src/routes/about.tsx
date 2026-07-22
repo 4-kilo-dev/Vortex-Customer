@@ -217,10 +217,7 @@ function AboutPage() {
         </RevealGroup>
       </Section>
 
-      <Section
-        className="dark border-y border-border/60 bg-charcoal-deep text-foreground"
-        withMotif
-      >
+      <Section paper withMotif>
         <SectionHeading
           title="Process"
           lead="Five stages, no surprises. You always know where your screen is."

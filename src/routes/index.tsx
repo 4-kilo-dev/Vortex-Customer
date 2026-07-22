@@ -14,6 +14,7 @@ import { Motif } from "@/components/brand/motif";
 import { Section, SectionHeading } from "@/components/section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/reveal";
 import { TestimonialsCarousel } from "@/components/testimonials-carousel";
+import { WhyVortexInfographic } from "@/components/why-vortex-infographic";
 import { Button } from "@/components/ui/button";
 import { UseCasesMarquee } from "@/components/use-cases-marquee";
 import { SERVICES } from "@/data/services";
@@ -59,14 +60,6 @@ const VALUES = [
     title: "Service after the sale",
     text: "Installed screens come with warranty, operator training, and a maintenance plan that answers the phone.",
   },
-] as const;
-
-/** Stagger offsets — reads like LED panel tiles, not a flat row. */
-const VALUE_OFFSETS = [
-  "md:translate-y-0",
-  "md:translate-y-8",
-  "md:translate-y-2",
-  "md:translate-y-10",
 ] as const;
 
 function Home() {
@@ -257,31 +250,14 @@ function Home() {
         </Reveal>
       </Section>
 
-      {/* Values — staggered LED-panel strip */}
-      <Section
-        className="dark border-y border-border/60 bg-charcoal-deep text-foreground"
-        withMotif
-      >
+      <Section withMotif>
         <SectionHeading
           eyebrow="Why Vortex"
           title="What we hold the line on"
         />
-        <RevealGroup className="grid gap-4 pb-2 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5 lg:pb-12">
-          {VALUES.map((value, i) => (
-            <RevealItem
-              key={value.title}
-              className={cn("transition-transform", VALUE_OFFSETS[i])}
-            >
-              <div className="pro-panel pro-panel--interactive flex h-full flex-col p-6">
-                <value.icon className="size-7 text-yellow" aria-hidden />
-                <h3 className="mt-4 font-heading text-base font-bold">
-                  {value.title}
-                </h3>
-                <p className="mt-2 text-sm text-muted-foreground">{value.text}</p>
-              </div>
-            </RevealItem>
-          ))}
-        </RevealGroup>
+        <Reveal>
+          <WhyVortexInfographic items={VALUES} />
+        </Reveal>
       </Section>
 
       <Section>
