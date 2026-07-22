@@ -3,15 +3,8 @@ import { Facebook, Instagram, Mail, MapPin, Phone, Youtube } from "lucide-react"
 
 import { Logo } from "@/components/brand/vortex-mark";
 import { Motif } from "@/components/brand/motif";
+import { TikTokIcon } from "@/components/icons/tiktok";
 import { CONTACT, SITE_NAME, SOCIALS } from "@/lib/site";
-
-function TikTokIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
-      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.9 2.9 0 1 1-2.31-2.84v-3.5a6.37 6.37 0 1 0 5.76 6.34V8.72a8.2 8.2 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.15Z" />
-    </svg>
-  );
-}
 
 const FOOTER_NAV = [
   { to: "/services", label: "Services" },

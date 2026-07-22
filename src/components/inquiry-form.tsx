@@ -32,11 +32,11 @@ const INQUIRY_API_KEY: string | undefined = import.meta.env
   .VITE_INQUIRY_API_KEY;
 
 const BUDGET_RANGES = [
-  "Under $500",
-  "$500 – $1,500",
-  "$1,500 – $5,000",
-  "$5,000 – $15,000",
-  "$15,000+",
+  "Under Br 50,000",
+  "Br 50,000 – 150,000",
+  "Br 150,000 – 500,000",
+  "Br 500,000 – 1,500,000",
+  "Br 1,500,000+",
 ] as const;
 
 const inquirySchema = z.object({

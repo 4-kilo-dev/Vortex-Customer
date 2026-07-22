@@ -5,6 +5,7 @@ import { z } from "zod";
 import { Section, SectionHeading } from "@/components/section";
 import { Reveal } from "@/components/reveal";
 import { InquiryForm } from "@/components/inquiry-form";
+import { TikTokIcon } from "@/components/icons/tiktok";
 import {
   CONTACT,
   SITE_NAME,
@@ -144,7 +145,7 @@ function ContactPage() {
                   </li>
                   <li>
                     <a href={SOCIALS.tiktok} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-muted-foreground transition-colors hover:text-yellow">
-                      <span className="font-heading text-xs font-bold text-yellow" aria-hidden>TT</span>
+                      <TikTokIcon className="size-4 text-yellow" />
                       TikTok
                     </a>
                   </li>
