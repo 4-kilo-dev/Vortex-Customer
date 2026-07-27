@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 
 import { VortexMark } from "@/components/brand/vortex-mark";
-import { Motif } from "@/components/brand/motif";
+import { HeroLedBackdrop } from "@/components/hero-led-backdrop";
 import { Section, SectionHeading } from "@/components/section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/reveal";
 import { TestimonialsCarousel } from "@/components/testimonials-carousel";
@@ -68,21 +68,21 @@ function Home() {
 
   return (
     <>
-      <section className="relative overflow-hidden">
-        <Motif className="text-foreground" />
-        <div className="relative mx-auto flex max-w-6xl flex-col items-center px-4 pb-20 pt-16 text-center sm:px-6 md:pb-28 md:pt-24">
+      <section className="relative min-h-[85vh] overflow-hidden md:min-h-[90vh]">
+        <HeroLedBackdrop />
+        <div className="relative z-10 mx-auto flex min-h-[85vh] max-w-6xl flex-col items-center justify-center px-4 pb-24 pt-20 text-center sm:px-6 md:min-h-[90vh] md:pb-32 md:pt-28">
           <motion.div
             initial={{ opacity: 0, scale: 0.85, rotate: -30 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
-            <VortexMark withGlow className="size-36 md:size-48" />
+            <VortexMark withGlow className="size-28 md:size-40" />
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.25, ease: "easeOut" }}
-            className="mt-8 max-w-3xl text-4xl font-extrabold leading-tight md:text-6xl"
+            className="hero-text mt-8 max-w-3xl text-4xl font-extrabold leading-tight md:text-6xl lg:text-7xl"
           >
             Big screens. <span className="text-yellow">Bigger</span> moments.
           </motion.h1>
@@ -90,7 +90,7 @@ function Home() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
-            className="mt-6 max-w-xl text-lg text-muted-foreground"
+            className="hero-sub mt-6 max-w-xl text-lg"
           >
             LED screen rental for events of every size, and permanent LED
             displays supplied and installed — rigged by professionals, run by
