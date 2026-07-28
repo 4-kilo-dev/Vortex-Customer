@@ -18,7 +18,7 @@ const SLIDE_MS = 6000;
 
 export function HeroLedBackdrop() {
   const [active, setActive] = useState(0);
-  const timer = useRef<ReturnType<typeof setInterval>>();
+  const timer = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
