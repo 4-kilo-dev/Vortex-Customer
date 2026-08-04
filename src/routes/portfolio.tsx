@@ -21,9 +21,9 @@ const imageGalleryJsonLd = {
 export const Route = createFileRoute("/portfolio")({
   head: () => {
     const meta = pageMeta({
-      title: "Portfolio — LED Screen Deployments | Vortex Visual",
+      title: "Portfolio — Selected Work | Vortex Visual",
       description:
-        "LED screens we've deployed: concert stages, wedding backdrops, conference screens, church installations, public screenings, billboards, and video walls.",
+        "Selected Vortex Visual deployments: outdoor concerts, festival screens, immersive LED rooms, exhibition booths, and city activations in Addis Ababa.",
       path: "/portfolio",
     });
     return {
@@ -44,9 +44,9 @@ function PortfolioPage() {
     <Section withMotif>
       <SectionHeading
         as="h1"
-        eyebrow="Portfolio"
-        title="Screens in the wild"
-        lead="Filter by setting. Placeholder frames for now — photos of real deployments swap in as they're cleared for publication."
+        eyebrow="Selected Work"
+        title="Screens we've put up"
+        lead="A cross-section of recent deployments — live screen production, immersive LED rooms, and corporate / exhibition builds."
       />
       <PortfolioGrid items={PORTFOLIO_ITEMS} />
     </Section>

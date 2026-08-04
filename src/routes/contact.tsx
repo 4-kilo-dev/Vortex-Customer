@@ -6,6 +6,7 @@ import { Section, SectionHeading } from "@/components/section";
 import { Reveal } from "@/components/reveal";
 import { InquiryForm } from "@/components/inquiry-form";
 import { TikTokIcon } from "@/components/icons/tiktok";
+import { TelegramIcon } from "@/components/icons/telegram";
 import {
   CONTACT,
   SITE_NAME,
@@ -26,9 +27,15 @@ const localBusinessJsonLd = {
   email: CONTACT.email,
   address: {
     "@type": "PostalAddress",
-    streetAddress: CONTACT.address, // PLACEHOLDER address
+    streetAddress: CONTACT.address,
   },
-  sameAs: [SOCIALS.instagram, SOCIALS.facebook, SOCIALS.tiktok, SOCIALS.youtube],
+  sameAs: [
+    SOCIALS.instagram,
+    SOCIALS.facebook,
+    SOCIALS.tiktok,
+    SOCIALS.youtube,
+    SOCIALS.telegram,
+  ],
 };
 
 const contactSearchSchema = z.object({
@@ -86,7 +93,6 @@ function ContactPage() {
                 <h2 className="font-heading text-sm font-bold uppercase tracking-widest text-neutral-40">
                   Direct lines
                 </h2>
-                {/* PLACEHOLDER contact details — configured in src/lib/site.ts */}
                 <ul className="mt-4 space-y-3 text-sm">
                   <li className="flex items-center gap-3">
                     <Phone className="size-4 shrink-0 text-yellow" aria-hidden />
@@ -108,29 +114,56 @@ function ContactPage() {
                   </li>
                   <li className="flex items-center gap-3">
                     <MapPin className="size-4 shrink-0 text-yellow" aria-hidden />
-                    <span className="text-muted-foreground">
+                    <a
+                      href={CONTACT.mapsUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-muted-foreground transition-colors hover:text-yellow"
+                    >
                       {CONTACT.address}
-                    </span>
+                    </a>
                   </li>
                 </ul>
-                <a
-                  href={whatsAppLink(
-                    "Hi Vortex Visual! I'd like to request a quote.",
-                  )}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-5 inline-flex items-center gap-2 rounded-md border border-yellow px-4 py-2.5 text-sm font-bold text-yellow transition-colors hover:bg-yellow hover:text-charcoal"
-                >
-                  Chat on WhatsApp
-                </a>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <a
+                    href={whatsAppLink(
+                      "Hi Vortex Visual! I'd like to request a quote.",
+                    )}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-md border border-yellow px-4 py-2.5 text-sm font-bold text-yellow transition-colors hover:bg-yellow hover:text-charcoal"
+                  >
+                    Chat on WhatsApp
+                  </a>
+                  <a
+                    href={SOCIALS.telegram}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-md border border-border px-4 py-2.5 text-sm font-bold text-foreground transition-colors hover:border-yellow hover:text-yellow"
+                  >
+                    <TelegramIcon className="size-4" />
+                    Message on Telegram
+                  </a>
+                </div>
               </div>
 
               <div>
                 <h2 className="font-heading text-sm font-bold uppercase tracking-widest text-neutral-40">
                   Follow the work
                 </h2>
-                {/* PLACEHOLDER social URLs — configured in src/lib/site.ts */}
                 <ul className="mt-4 space-y-3 text-sm">
+                  <li>
+                    <a href={SOCIALS.tiktok} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-muted-foreground transition-colors hover:text-yellow">
+                      <TikTokIcon className="size-4 text-yellow" />
+                      TikTok
+                    </a>
+                  </li>
+                  <li>
+                    <a href={SOCIALS.telegram} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-muted-foreground transition-colors hover:text-yellow">
+                      <TelegramIcon className="size-4 text-yellow" />
+                      Telegram
+                    </a>
+                  </li>
                   <li>
                     <a href={SOCIALS.instagram} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-muted-foreground transition-colors hover:text-yellow">
                       <Instagram className="size-4 text-yellow" aria-hidden />
@@ -141,12 +174,6 @@ function ContactPage() {
                     <a href={SOCIALS.facebook} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-muted-foreground transition-colors hover:text-yellow">
                       <Facebook className="size-4 text-yellow" aria-hidden />
                       Facebook
-                    </a>
-                  </li>
-                  <li>
-                    <a href={SOCIALS.tiktok} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-muted-foreground transition-colors hover:text-yellow">
-                      <TikTokIcon className="size-4 text-yellow" />
-                      TikTok
                     </a>
                   </li>
                   <li>
@@ -162,12 +189,10 @@ function ContactPage() {
                 <h2 className="font-heading text-sm font-bold uppercase tracking-widest text-neutral-40">
                   Find us
                 </h2>
-                {/* PLACEHOLDER map location (central Addis Ababa) — update the
-                    q= coordinates once the real office address is set. */}
                 <div className="mt-4 overflow-hidden rounded-lg border border-border">
                   <iframe
-                    title="Vortex Visual office location"
-                    src="https://www.google.com/maps?q=9.0108,38.7613&z=14&output=embed"
+                    title="Vortex Visual location"
+                    src={CONTACT.mapsEmbed}
                     width="100%"
                     height="240"
                     style={{ border: 0 }}
@@ -176,6 +201,14 @@ function ContactPage() {
                     referrerPolicy="no-referrer-when-downgrade"
                   />
                 </div>
+                <a
+                  href={CONTACT.mapsUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-3 inline-block text-sm text-muted-foreground transition-colors hover:text-yellow"
+                >
+                  Open in Google Maps
+                </a>
               </div>
             </aside>
           </Reveal>

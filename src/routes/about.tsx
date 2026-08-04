@@ -1,22 +1,19 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import {
   ArrowRight,
-  ClipboardList,
-  Compass,
   Eye,
   Handshake,
   MonitorCheck,
-  PlayCircle,
   Target,
   Timer,
   UserRound,
-  Wrench,
 } from "lucide-react";
 
 import { VortexMark } from "@/components/brand/vortex-mark";
 import { Section, SectionHeading } from "@/components/section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
+import { WORKFLOW } from "@/data/partnerships";
 import { pageMeta } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -30,34 +27,6 @@ export const Route = createFileRoute("/about")({
     }),
   component: AboutPage,
 });
-
-const PROCESS = [
-  {
-    icon: Compass,
-    step: "Assess",
-    text: "We visit the venue or site, measure viewing distances, and check power, access, and mounting.",
-  },
-  {
-    icon: ClipboardList,
-    step: "Spec",
-    text: "Screen size, pixel pitch, processing, and rigging plan — quoted transparently with no surprise line items.",
-  },
-  {
-    icon: Wrench,
-    step: "Rig / Install",
-    text: "Certified rigging for events, structural installation for permanent screens. Tested well before go-live.",
-  },
-  {
-    icon: PlayCircle,
-    step: "Operate",
-    text: "A technician runs rentals end to end; for installed screens we calibrate and train your operators.",
-  },
-  {
-    icon: MonitorCheck,
-    step: "Support",
-    text: "Teardown without a trace for rentals; warranty and a responsive maintenance plan for sales.",
-  },
-] as const;
 
 const VALUES = [
   {
@@ -82,9 +51,8 @@ function ProcessTree() {
     <div className="process-tree">
       <div aria-hidden className="process-tree__spine" />
 
-      {PROCESS.map((phase, i) => {
+      {WORKFLOW.map((phase, i) => {
         const isRight = i % 2 === 0;
-        const step = String(i + 1).padStart(2, "0");
 
         return (
           <RevealItem key={phase.step} className="process-tree__row">
@@ -111,17 +79,11 @@ function ProcessTree() {
             >
               <div className="pro-panel pro-panel--interactive p-5 md:p-6">
                 <div className="flex items-start gap-4">
-                  <span className="process-tree__step-num">{step}</span>
+                  <span className="process-tree__step-num">{phase.step}</span>
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
-                      <phase.icon
-                        className="size-5 shrink-0 text-yellow"
-                        aria-hidden
-                      />
-                      <h3 className="font-heading text-base font-bold md:text-lg">
-                        {phase.step}
-                      </h3>
-                    </div>
+                    <h3 className="font-heading text-base font-bold uppercase tracking-wide md:text-lg">
+                      {phase.title}
+                    </h3>
                     <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                       {phase.text}
                     </p>
@@ -219,8 +181,8 @@ function AboutPage() {
 
       <Section paper withMotif>
         <SectionHeading
-          title="Process"
-          lead="Five stages, no surprises. You always know where your screen is."
+          title="Simplified work order"
+          lead="Five stages from briefing to on-site delivery — no vendor stacking."
         />
         <RevealGroup>
           <ProcessTree />

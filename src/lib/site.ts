@@ -1,9 +1,8 @@
 /**
  * Central site configuration.
  *
- * PLACEHOLDER VALUES — everything marked "PLACEHOLDER" below must be swapped
- * for real values (domain, phone, email, address, social handles) before
- * launch. They are collected here so there is exactly one place to edit.
+ * Domain / email still placeholders until launch — phone, TikTok, Telegram,
+ * and map pin are live Vortex Visual contacts.
  */
 
 /** PLACEHOLDER: set the production domain once it exists. */
@@ -13,21 +12,24 @@ export const SITE_NAME = "Vortex Visual";
 export const SITE_TAGLINE = "Big screens. Bigger moments.";
 
 export const CONTACT = {
-  /** PLACEHOLDER phone number (E.164, no spaces) — also used for WhatsApp. */
-  phone: "+251900000000",
-  phoneDisplay: "+251 900 000 000", // PLACEHOLDER
+  phone: "+251988185863",
+  phoneDisplay: "+251 98 818 5863",
   /** PLACEHOLDER email address. */
   email: "hello@vortexvisual.com",
-  /** PLACEHOLDER street address. */
-  address: "Bole Road, Addis Ababa, Ethiopia",
+  address: "Addis Ababa, Ethiopia",
+  mapsUrl: "https://maps.app.goo.gl/cDNmsWDgTDcD8z3t8",
+  /** Embed uses the resolved pin from CONTACT.mapsUrl. */
+  mapsEmbed:
+    "https://www.google.com/maps?q=9.016329,38.7860242&z=16&output=embed",
 } as const;
 
-/** PLACEHOLDER social profile URLs. */
 export const SOCIALS = {
+  /** PLACEHOLDER until official handles are confirmed. */
   instagram: "https://instagram.com/vortexvisual",
   facebook: "https://facebook.com/vortexvisual",
-  tiktok: "https://tiktok.com/@vortexvisual",
+  tiktok: "https://www.tiktok.com/@vortex.visual.et",
   youtube: "https://youtube.com/@vortexvisual",
+  telegram: "https://t.me/vortex_visual_et",
 } as const;
 
 /** Builds a WhatsApp deep link with a URL-encoded prefilled message. */

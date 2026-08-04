@@ -172,12 +172,12 @@ function Home() {
         </Reveal>
       </Section>
 
-      {/* Portfolio — asymmetric bento wall */}
+      {/* Selected Work — from partnership proposal */}
       <Section paper withMotif>
         <SectionHeading
-          eyebrow="Recent deployments"
+          eyebrow="Selected Work"
           title="Screens we've put up"
-          lead="Festival stages, wedding backdrops, digital billboards, and permanent video walls."
+          lead="Concert stages, festival walls, immersive LED rooms, and exhibition builds from recent deployments."
         />
         <RevealGroup className="grid auto-rows-[11rem] grid-cols-2 gap-3 sm:auto-rows-[13rem] sm:gap-4 md:grid-cols-4 md:auto-rows-[14rem]">
           <RevealItem className="col-span-2 row-span-2">

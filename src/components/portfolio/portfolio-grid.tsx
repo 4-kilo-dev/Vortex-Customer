@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import { Layers } from "lucide-react";
 
 import {
   PORTFOLIO_CATEGORIES,
@@ -76,11 +75,6 @@ export function PortfolioGrid({ items }: { items: Array<PortfolioItem> }) {
                   {item.title}
                 </span>
                 <span className="text-sm text-neutral-20">{item.caption}</span>
-                {item.beforeAfter && (
-                  <span className="mt-2 inline-flex w-fit items-center gap-1 rounded-full bg-yellow px-2 py-0.5 text-xs font-bold text-charcoal">
-                    <Layers className="size-3" aria-hidden /> Before / After
-                  </span>
-                )}
               </span>
             </button>
           </RevealItem>

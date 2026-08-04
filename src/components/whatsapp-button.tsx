@@ -9,10 +9,7 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
-/**
- * Site-wide floating WhatsApp button.
- * PLACEHOLDER number — swap in src/lib/site.ts (CONTACT.phone).
- */
+/** Site-wide floating WhatsApp button — number from CONTACT.phone. */
 export function WhatsAppButton() {
   return (
     <a

@@ -22,7 +22,13 @@ const organizationJsonLd = {
   slogan: SITE_TAGLINE,
   email: CONTACT.email,
   telephone: CONTACT.phone,
-  sameAs: [SOCIALS.instagram, SOCIALS.facebook, SOCIALS.tiktok, SOCIALS.youtube],
+  sameAs: [
+    SOCIALS.instagram,
+    SOCIALS.facebook,
+    SOCIALS.tiktok,
+    SOCIALS.youtube,
+    SOCIALS.telegram,
+  ],
 }
 
 export const Route = createRootRoute({

@@ -838,3 +838,532 @@ h6 {
   line-height: 1.55;
   color: var(--muted-foreground);
 }
+
+/* ---------------------------------------------------------------------------
+   White-label / sub-rental band — creative partnership pledge layout
+   --------------------------------------------------------------------------- */
+
+.wl-band {
+  border-block: 1px solid var(--border);
+}
+
+.wl-layout {
+  display: grid;
+  gap: 2.5rem;
+}
+
+@media (min-width: 900px) {
+  .wl-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 3.5rem;
+    align-items: start;
+  }
+}
+
+.wl-intro {
+  position: relative;
+}
+
+.wl-lead {
+  max-width: 28rem;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--muted-foreground);
+}
+
+.wl-roles {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 2rem;
+  max-width: 26rem;
+}
+
+.wl-role {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  border-radius: 0.5rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+}
+
+.wl-role--agency {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  color: var(--charcoal);
+}
+
+.wl-role--vortex {
+  background: var(--card);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
+}
+
+.light .wl-role--vortex {
+  background: white;
+}
+
+.wl-role__label {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.wl-role__sub {
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
+
+.wl-role--agency .wl-role__sub {
+  opacity: 0.7;
+  color: var(--charcoal);
+}
+
+.wl-role__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+}
+
+.wl-role__divider span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--yellow),
+    var(--border),
+    var(--foreground)
+  );
+  opacity: 0.55;
+}
+
+.wl-pledges {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.wl-pledge {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem 1.25rem;
+  align-items: start;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 1.35rem 1.4rem 1.35rem 1.25rem;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.05),
+    0 16px 40px rgb(0 0 0 / 0.16);
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.light .wl-pledge {
+  background: white;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.9),
+    0 16px 36px rgb(29 30 34 / 0.07);
+}
+
+.wl-pledge::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--yellow);
+  opacity: 0.85;
+}
+
+.wl-pledge:hover {
+  transform: translateX(4px);
+  border-color: var(--yellow);
+}
+
+.wl-pledge--2 {
+  margin-left: 0;
+}
+
+.wl-pledge--3 {
+  margin-left: 0;
+}
+
+@media (min-width: 900px) {
+  .wl-pledge--1 {
+    transform: translateX(0);
+  }
+
+  .wl-pledge--2 {
+    margin-left: 1.5rem;
+  }
+
+  .wl-pledge--3 {
+    margin-left: 3rem;
+  }
+
+  .wl-pledge--2:hover,
+  .wl-pledge--3:hover {
+    transform: translateX(8px);
+  }
+}
+
+.wl-pledge__num {
+  font-family: var(--font-heading);
+  font-size: clamp(2.4rem, 4vw, 3.25rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: rgb(255 199 44 / 0.45);
+}
+
+.light .wl-pledge__num {
+  color: rgb(180 130 0 / 0.28);
+}
+
+.wl-pledge__title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.wl-pledge__text {
+  margin-top: 0.45rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wl-pledge,
+  .wl-pledge:hover,
+  .wl-pledge--2:hover,
+  .wl-pledge--3:hover {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   B2B pricing ladder
+   --------------------------------------------------------------------------- */
+
+.pricing-layout {
+  display: grid;
+  gap: 2.5rem;
+}
+
+@media (min-width: 900px) {
+  .pricing-layout {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr);
+    gap: 3rem;
+    align-items: center;
+  }
+}
+
+.pricing-note {
+  display: inline-block;
+  border-left: 3px solid var(--yellow);
+  padding-left: 0.85rem;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--foreground);
+}
+
+.pricing-ladder {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pricing-rung {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: 1rem;
+  align-items: stretch;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.light .pricing-rung {
+  background: white;
+}
+
+.pricing-rung:hover {
+  transform: translateY(-2px);
+  border-color: var(--yellow);
+  box-shadow: 0 18px 40px rgb(0 0 0 / 0.16);
+}
+
+.light .pricing-rung:hover {
+  box-shadow: 0 18px 36px rgb(29 30 34 / 0.08);
+}
+
+.pricing-rung--1 .pricing-rung__meta {
+  background: rgb(255 199 44 / 0.12);
+}
+
+.pricing-rung--2 .pricing-rung__meta {
+  background: rgb(255 199 44 / 0.22);
+}
+
+.pricing-rung--3 .pricing-rung__meta {
+  background: var(--yellow);
+  color: var(--charcoal);
+}
+
+.pricing-rung__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 1.25rem 0.5rem;
+}
+
+.pricing-rung__tier {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.pricing-rung__label {
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.pricing-rung__copy {
+  padding: 1.25rem 1.35rem 1.25rem 0;
+}
+
+.pricing-rung__copy h3 {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.pricing-rung__copy p {
+  margin-top: 0.4rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+
+/* ---------------------------------------------------------------------------
+   Why partner — numbered bento
+   --------------------------------------------------------------------------- */
+
+.why-bento {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .why-bento {
+    grid-template-columns: 1.15fr 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .why-bento > :nth-child(1) {
+    grid-row: span 2;
+    min-height: 100%;
+  }
+}
+
+.why-tile {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 1.6rem 1.5rem 1.5rem;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.05),
+    0 16px 40px rgb(0 0 0 / 0.14);
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease;
+}
+
+.light .why-tile {
+  background: white;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.9),
+    0 16px 36px rgb(29 30 34 / 0.07);
+}
+
+.why-tile:hover {
+  transform: translateY(-3px);
+  border-color: var(--yellow);
+}
+
+.why-tile__num {
+  position: absolute;
+  right: 0.75rem;
+  top: 0.35rem;
+  z-index: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(4rem, 8vw, 6rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: rgb(255 199 44 / 0.14);
+  pointer-events: none;
+}
+
+.light .why-tile__num {
+  color: rgb(29 30 34 / 0.06);
+}
+
+.why-tile__title,
+.why-tile__text {
+  position: relative;
+  z-index: 1;
+}
+
+.why-tile__title {
+  max-width: 14rem;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.why-bento > :nth-child(1) .why-tile__title {
+  max-width: 12rem;
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+}
+
+.why-tile__text {
+  margin-top: 0.75rem;
+  max-width: 28rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+
+/* ---------------------------------------------------------------------------
+   Built-with partner plates
+   --------------------------------------------------------------------------- */
+
+.built-rail {
+  display: grid;
+  gap: 0.85rem;
+}
+
+@media (min-width: 768px) {
+  .built-rail {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1100px) {
+  .built-rail {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.built-plate {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 11.5rem;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(160deg, rgb(255 199 44 / 0.1), transparent 45%),
+    var(--card);
+  padding: 1.25rem;
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.light .built-plate {
+  background:
+    linear-gradient(160deg, rgb(255 199 44 / 0.14), transparent 48%),
+    white;
+}
+
+.built-plate:hover {
+  transform: translateY(-4px);
+  border-color: var(--yellow);
+  box-shadow: 0 20px 44px rgb(0 0 0 / 0.18);
+}
+
+.light .built-plate:hover {
+  box-shadow: 0 20px 40px rgb(29 30 34 / 0.09);
+}
+
+.built-plate__mark {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.9rem;
+  font-family: var(--font-heading);
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: rgb(255 199 44 / 0.28);
+}
+
+.light .built-plate__mark {
+  color: rgb(180 130 0 / 0.2);
+}
+
+.built-plate__name {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.built-plate__blurb {
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pricing-rung,
+  .pricing-rung:hover,
+  .why-tile,
+  .why-tile:hover,
+  .built-plate,
+  .built-plate:hover {
+    transition: none;
+    transform: none;
+  }
+}

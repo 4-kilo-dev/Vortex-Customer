@@ -4,11 +4,13 @@ import { Facebook, Instagram, Mail, MapPin, Phone, Youtube } from "lucide-react"
 import { Logo } from "@/components/brand/vortex-mark";
 import { Motif } from "@/components/brand/motif";
 import { TikTokIcon } from "@/components/icons/tiktok";
+import { TelegramIcon } from "@/components/icons/telegram";
 import { CONTACT, SITE_NAME, SOCIALS } from "@/lib/site";
 
 const FOOTER_NAV = [
   { to: "/services", label: "Services" },
   { to: "/portfolio", label: "Portfolio" },
+  { to: "/partnerships", label: "Partnerships" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ] as const;
@@ -63,18 +65,28 @@ export function SiteFooter() {
             </li>
             <li className="flex items-center gap-2">
               <MapPin className="size-4 text-yellow" aria-hidden />
-              <span>{CONTACT.address}</span>
+              <a
+                href={CONTACT.mapsUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-yellow"
+              >
+                {CONTACT.address}
+              </a>
             </li>
           </ul>
           <div className="mt-5 flex items-center gap-3">
+            <a href={SOCIALS.tiktok} target="_blank" rel="noreferrer" aria-label="TikTok" className="text-muted-foreground transition-colors hover:text-yellow">
+              <TikTokIcon className="size-5" />
+            </a>
+            <a href={SOCIALS.telegram} target="_blank" rel="noreferrer" aria-label="Telegram" className="text-muted-foreground transition-colors hover:text-yellow">
+              <TelegramIcon className="size-5" />
+            </a>
             <a href={SOCIALS.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="text-muted-foreground transition-colors hover:text-yellow">
               <Instagram className="size-5" />
             </a>
             <a href={SOCIALS.facebook} target="_blank" rel="noreferrer" aria-label="Facebook" className="text-muted-foreground transition-colors hover:text-yellow">
               <Facebook className="size-5" />
-            </a>
-            <a href={SOCIALS.tiktok} target="_blank" rel="noreferrer" aria-label="TikTok" className="text-muted-foreground transition-colors hover:text-yellow">
-              <TikTokIcon className="size-5" />
             </a>
             <a href={SOCIALS.youtube} target="_blank" rel="noreferrer" aria-label="YouTube" className="text-muted-foreground transition-colors hover:text-yellow">
               <Youtube className="size-5" />

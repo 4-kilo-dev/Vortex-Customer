@@ -2,12 +2,7 @@ import { useEffect } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
-import {
-  portfolioBeforeUrl,
-  portfolioImageUrl,
-  type PortfolioItem,
-} from "@/data/portfolio";
-import { BeforeAfterSlider } from "@/components/portfolio/before-after-slider";
+import { portfolioImageUrl, type PortfolioItem } from "@/data/portfolio";
 
 export function Lightbox({
   items,
@@ -45,19 +40,11 @@ export function Lightbox({
           {item && (
             <figure>
               <Dialog.Title className="sr-only">{item.title}</Dialog.Title>
-              {item.beforeAfter ? (
-                <BeforeAfterSlider
-                  beforeSrc={portfolioBeforeUrl(item, 1200)}
-                  afterSrc={portfolioImageUrl(item, 1200)}
-                  alt={`${item.title} — ${item.caption}`}
-                />
-              ) : (
-                <img
-                  src={portfolioImageUrl(item, 1200)}
-                  alt={`${item.title} — ${item.caption}`}
-                  className="max-h-[75vh] w-full rounded-lg object-contain"
-                />
-              )}
+              <img
+                src={portfolioImageUrl(item, 1200)}
+                alt={`${item.title} — ${item.caption}`}
+                className="max-h-[75vh] w-full rounded-lg object-contain"
+              />
               <figcaption className="mt-4 flex items-baseline justify-between gap-4">
                 <div>
                   <p className="font-heading font-bold">{item.title}</p>
