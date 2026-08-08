@@ -14,17 +14,32 @@ import { Section, SectionHeading } from "@/components/section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
 import { WORKFLOW } from "@/data/partnerships";
-import { pageMeta } from "@/lib/site";
+import { breadcrumbJsonLd, pageMeta } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/about")({
-  head: () =>
-    pageMeta({
-      title: "About — Vortex Visual",
+  head: () => {
+    const meta = pageMeta({
+      title: "About Vortex Visual | LED Company in Addis Ababa, Ethiopia",
       description:
-        "The story, mission, and process behind Vortex Visual — an LED screen rental and sales company built on reliability and straight dealing.",
+        "Learn how Vortex Visual built an LED rental and sales company around reliability — professional rigging, white-label crews, and a clear work-order process in Addis Ababa.",
       path: "/about",
-    }),
+    });
+    return {
+      ...meta,
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "About", path: "/about" },
+            ]),
+          ),
+        },
+      ],
+    };
+  },
   component: AboutPage,
 });
 

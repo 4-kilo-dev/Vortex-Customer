@@ -3,28 +3,37 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Section, SectionHeading } from "@/components/section";
 import { PortfolioGrid } from "@/components/portfolio/portfolio-grid";
 import { PORTFOLIO_ITEMS, portfolioImageUrl } from "@/data/portfolio";
-import { SITE_NAME, canonicalUrl, pageMeta } from "@/lib/site";
+import {
+  SITE_NAME,
+  SITE_URL,
+  breadcrumbJsonLd,
+  canonicalUrl,
+  pageMeta,
+} from "@/lib/site";
 
 const imageGalleryJsonLd = {
   "@context": "https://schema.org",
   "@type": "ImageGallery",
-  name: `${SITE_NAME} Portfolio`,
+  name: `${SITE_NAME} Portfolio — Selected LED Work`,
+  description:
+    "LED screen deployments, immersive rooms, and exhibition builds by Vortex Visual in Addis Ababa, Ethiopia.",
   url: canonicalUrl("/portfolio"),
   image: PORTFOLIO_ITEMS.slice(0, 8).map((item) => ({
     "@type": "ImageObject",
     name: item.title,
     caption: item.caption,
-    contentUrl: portfolioImageUrl(item, 1200),
+    contentUrl: `${SITE_URL}${portfolioImageUrl(item, 1200)}`,
   })),
 };
 
 export const Route = createFileRoute("/portfolio")({
   head: () => {
     const meta = pageMeta({
-      title: "Portfolio — Selected Work | Vortex Visual",
+      title: "LED Screen Portfolio & Event Work | Vortex Visual Addis Ababa",
       description:
-        "Selected Vortex Visual deployments: outdoor concerts, festival screens, immersive LED rooms, exhibition booths, and city activations in Addis Ababa.",
+        "See Vortex Visual deployments in Addis Ababa: outdoor concerts, festival LED walls, immersive rooms, exhibition booths, and city activations.",
       path: "/portfolio",
+      image: "/portfolio/craft-addis-festival.jpg",
     });
     return {
       ...meta,
@@ -32,6 +41,15 @@ export const Route = createFileRoute("/portfolio")({
         {
           type: "application/ld+json",
           children: JSON.stringify(imageGalleryJsonLd),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "Portfolio", path: "/portfolio" },
+            ]),
+          ),
         },
       ],
     };

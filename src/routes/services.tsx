@@ -6,16 +6,64 @@ import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
 import { SERVICES } from "@/data/services";
 import { cn } from "@/lib/utils";
-import { pageMeta } from "@/lib/site";
+import {
+  SITE_NAME,
+  SITE_URL,
+  breadcrumbJsonLd,
+  canonicalUrl,
+  pageMeta,
+} from "@/lib/site";
+
+const servicesJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "OfferCatalog",
+  name: `${SITE_NAME} Services`,
+  url: canonicalUrl("/services"),
+  itemListElement: SERVICES.map((service, index) => ({
+    "@type": "Offer",
+    position: index + 1,
+    itemOffered: {
+      "@type": "Service",
+      name: service.title,
+      description: service.summary,
+      url: `${canonicalUrl("/services")}#${service.slug}`,
+      provider: { "@id": `${SITE_URL}/#organization` },
+      areaServed: [
+        { "@type": "City", name: "Addis Ababa" },
+        { "@type": "Country", name: "Ethiopia" },
+      ],
+    },
+  })),
+};
 
 export const Route = createFileRoute("/services")({
-  head: () =>
-    pageMeta({
-      title: "Services — LED Screen Rental & Sales | Vortex Visual",
+  head: () => {
+    const meta = pageMeta({
+      title: "LED Screen Rental & Sales Services | Vortex Visual Ethiopia",
       description:
-        "LED screen rental with delivery, rigging, and on-site technicians — plus permanent LED display sales with installation, calibration, and warranty.",
+        "Hire event LED walls with delivery, rigging, and on-site technicians — or buy permanent LED displays with installation, calibration, and warranty in Addis Ababa.",
       path: "/services",
-    }),
+      image: "/portfolio/truss-led-rigging.jpg",
+    });
+    return {
+      ...meta,
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(servicesJsonLd),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "Services", path: "/services" },
+            ]),
+          ),
+        },
+      ],
+    };
+  },
   component: ServicesPage,
 });
 

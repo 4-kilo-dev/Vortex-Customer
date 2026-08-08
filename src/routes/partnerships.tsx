@@ -15,16 +15,32 @@ import {
   WHITE_LABEL,
   WHY_PARTNER,
 } from "@/data/partnerships";
-import { pageMeta } from "@/lib/site";
+import { breadcrumbJsonLd, pageMeta } from "@/lib/site";
 
 export const Route = createFileRoute("/partnerships")({
-  head: () =>
-    pageMeta({
-      title: "B2B Partnerships — Vortex Visual",
+  head: () => {
+    const meta = pageMeta({
+      title: "B2B LED Partnerships for Agencies | Vortex Visual Ethiopia",
       description:
-        "Cooperative partnership framework for event and production agencies: white-label LED, rigging, fabrication, and preferred B2B rates in Addis Ababa.",
+        "White-label LED, rigging, and fabrication partnerships for event agencies in Addis Ababa — preferred B2B rates, protected clients, and one consolidated crew.",
       path: "/partnerships",
-    }),
+      image: "/portfolio/immersive-led-starfield.jpg",
+    });
+    return {
+      ...meta,
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "Partnerships", path: "/partnerships" },
+            ]),
+          ),
+        },
+      ],
+    };
+  },
   component: PartnershipsPage,
 });
 

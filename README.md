@@ -27,15 +27,16 @@ src/
   styles.css         design tokens (oklch) + Tailwind v4 theme mapping
 ```
 
-## Placeholders to swap before launch
+## Production domain
 
-All placeholder values are marked with `PLACEHOLDER` comments in code:
+Live site config targets **https://vortexvisual.et** (`SITE_URL` in `src/lib/site.ts`).
+`public/robots.txt` and `public/sitemap.xml` use absolute URLs for that domain.
 
-- **`src/lib/site.ts`** — domain (`SITE_URL`), phone, email, address, social URLs.
-- **`src/data/portfolio.ts`** — placeholder imagery (picsum.photos); swap seeds for real asset URLs.
+Still to confirm before/after launch:
+
+- **`src/lib/site.ts`** — Instagram / Facebook / YouTube if official handles differ.
 - **`src/routes/about.tsx`** — team roster names/roles/photos.
-- **`src/routes/contact.tsx`** — Google Map embed coordinates.
-- **`public/sitemap.xml`** — prefix relative URLs with the production domain.
+- Submit `https://vortexvisual.et/sitemap.xml` in Google Search Console.
 
 ## Inquiry API
 

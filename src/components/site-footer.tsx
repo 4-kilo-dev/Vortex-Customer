@@ -1,11 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Instagram, Mail, MapPin, Phone, Youtube } from "lucide-react";
+import { Instagram, Mail, MapPin, Phone } from "lucide-react";
 
 import { Logo } from "@/components/brand/vortex-mark";
 import { Motif } from "@/components/brand/motif";
 import { TikTokIcon } from "@/components/icons/tiktok";
 import { TelegramIcon } from "@/components/icons/telegram";
-import { CONTACT, SITE_NAME, SOCIALS } from "@/lib/site";
+import { CONTACT, POWERED_BY, SITE_NAME, SOCIALS } from "@/lib/site";
 
 const FOOTER_NAV = [
   { to: "/services", label: "Services" },
@@ -76,26 +76,54 @@ export function SiteFooter() {
             </li>
           </ul>
           <div className="mt-5 flex items-center gap-3">
-            <a href={SOCIALS.tiktok} target="_blank" rel="noreferrer" aria-label="TikTok" className="text-muted-foreground transition-colors hover:text-yellow">
+            <a
+              href={SOCIALS.tiktok}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="TikTok"
+              className="text-muted-foreground transition-colors hover:text-yellow"
+            >
               <TikTokIcon className="size-5" />
             </a>
-            <a href={SOCIALS.telegram} target="_blank" rel="noreferrer" aria-label="Telegram" className="text-muted-foreground transition-colors hover:text-yellow">
-              <TelegramIcon className="size-5" />
-            </a>
-            <a href={SOCIALS.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="text-muted-foreground transition-colors hover:text-yellow">
+            <a
+              href={SOCIALS.instagram}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram"
+              className="text-muted-foreground transition-colors hover:text-yellow"
+            >
               <Instagram className="size-5" />
             </a>
-            <a href={SOCIALS.facebook} target="_blank" rel="noreferrer" aria-label="Facebook" className="text-muted-foreground transition-colors hover:text-yellow">
-              <Facebook className="size-5" />
-            </a>
-            <a href={SOCIALS.youtube} target="_blank" rel="noreferrer" aria-label="YouTube" className="text-muted-foreground transition-colors hover:text-yellow">
-              <Youtube className="size-5" />
+            <a
+              href={SOCIALS.telegram}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Telegram"
+              className="text-muted-foreground transition-colors hover:text-yellow"
+            >
+              <TelegramIcon className="size-5" />
             </a>
           </div>
         </div>
       </div>
-      <div className="relative border-t border-border/40 py-5 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} {SITE_NAME}. All rights reserved.
+      <div className="relative flex flex-col items-center justify-center gap-1 border-t border-border/40 px-4 py-5 text-center text-xs text-muted-foreground sm:flex-row sm:gap-2">
+        <span>
+          © {new Date().getFullYear()} {SITE_NAME}. All rights reserved.
+        </span>
+        <span className="hidden text-border sm:inline" aria-hidden>
+          ·
+        </span>
+        <span>
+          Powered by{" "}
+          <a
+            href={POWERED_BY.url}
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium text-neutral-40 transition-colors hover:text-yellow"
+          >
+            {POWERED_BY.name}
+          </a>
+        </span>
       </div>
     </footer>
   );

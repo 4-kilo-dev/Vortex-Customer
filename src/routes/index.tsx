@@ -29,10 +29,12 @@ import { pageMeta } from "@/lib/site";
 export const Route = createFileRoute("/")({
   head: () =>
     pageMeta({
-      title: "Vortex Visual — LED Screen Rental & Sales",
+      title:
+        "Vortex Visual | LED Screen Rental & Sales in Addis Ababa, Ethiopia",
       description:
-        "Event-grade LED screen rental with on-site technicians, and permanent LED display sales with installation, calibration, and warranty.",
+        "Event-grade LED screen rental and permanent display sales in Addis Ababa — concerts, conferences, immersive rooms, rigging, and white-label agency support.",
       path: "/",
+      image: "/portfolio/twilight-outdoor-concert.jpg",
     }),
   component: Home,
 });

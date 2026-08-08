@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Facebook, Instagram, Mail, MapPin, Phone, Youtube } from "lucide-react";
+import { Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { z } from "zod";
 
 import { Section, SectionHeading } from "@/components/section";
@@ -12,7 +12,7 @@ import {
   SITE_NAME,
   SITE_URL,
   SOCIALS,
-  canonicalUrl,
+  breadcrumbJsonLd,
   pageMeta,
   whatsAppLink,
 } from "@/lib/site";
@@ -20,22 +20,38 @@ import {
 const localBusinessJsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
+  "@id": `${SITE_URL}/#localbusiness`,
   name: SITE_NAME,
-  url: canonicalUrl("/contact"),
-  image: `${SITE_URL}/logo-dark.png`,
+  url: SITE_URL,
+  image: [`${SITE_URL}/logo-dark.png`, `${SITE_URL}/portfolio/twilight-outdoor-concert.jpg`],
   telephone: CONTACT.phone,
   email: CONTACT.email,
+  priceRange: "$$",
   address: {
     "@type": "PostalAddress",
     streetAddress: CONTACT.address,
+    addressLocality: CONTACT.addressLocality,
+    addressCountry: CONTACT.addressCountry,
   },
-  sameAs: [
-    SOCIALS.instagram,
-    SOCIALS.facebook,
-    SOCIALS.tiktok,
-    SOCIALS.youtube,
-    SOCIALS.telegram,
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: CONTACT.geo.latitude,
+    longitude: CONTACT.geo.longitude,
+  },
+  hasMap: CONTACT.mapsUrl,
+  areaServed: [
+    { "@type": "City", name: "Addis Ababa" },
+    { "@type": "Country", name: "Ethiopia" },
   ],
+  sameAs: [SOCIALS.tiktok, SOCIALS.instagram, SOCIALS.telegram],
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: CONTACT.phone,
+    email: CONTACT.email,
+    contactType: "customer service",
+    areaServed: "ET",
+    availableLanguage: ["en", "am"],
+  },
 };
 
 const contactSearchSchema = z.object({
@@ -47,9 +63,9 @@ export const Route = createFileRoute("/contact")({
   validateSearch: contactSearchSchema,
   head: () => {
     const meta = pageMeta({
-      title: "Contact — Vortex Visual",
+      title: "Contact Vortex Visual | LED Quote in Addis Ababa",
       description:
-        "Request a quote for LED screen rental or a permanent LED display installation. We respond within one business day.",
+        `Request an LED screen rental or sales quote in Addis Ababa. Call ${CONTACT.phoneDisplay}, message on Telegram, or use the inquiry form — we usually reply within one business day.`,
       path: "/contact",
     });
     return {
@@ -58,6 +74,15 @@ export const Route = createFileRoute("/contact")({
         {
           type: "application/ld+json",
           children: JSON.stringify(localBusinessJsonLd),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "Contact", path: "/contact" },
+            ]),
+          ),
         },
       ],
     };
@@ -159,27 +184,15 @@ function ContactPage() {
                     </a>
                   </li>
                   <li>
-                    <a href={SOCIALS.telegram} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-muted-foreground transition-colors hover:text-yellow">
-                      <TelegramIcon className="size-4 text-yellow" />
-                      Telegram
-                    </a>
-                  </li>
-                  <li>
                     <a href={SOCIALS.instagram} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-muted-foreground transition-colors hover:text-yellow">
                       <Instagram className="size-4 text-yellow" aria-hidden />
                       Instagram
                     </a>
                   </li>
                   <li>
-                    <a href={SOCIALS.facebook} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-muted-foreground transition-colors hover:text-yellow">
-                      <Facebook className="size-4 text-yellow" aria-hidden />
-                      Facebook
-                    </a>
-                  </li>
-                  <li>
-                    <a href={SOCIALS.youtube} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-muted-foreground transition-colors hover:text-yellow">
-                      <Youtube className="size-4 text-yellow" aria-hidden />
-                      YouTube
+                    <a href={SOCIALS.telegram} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-muted-foreground transition-colors hover:text-yellow">
+                      <TelegramIcon className="size-4 text-yellow" />
+                      Telegram
                     </a>
                   </li>
                 </ul>
