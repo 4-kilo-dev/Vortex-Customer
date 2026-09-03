@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import emailjs from "@emailjs/browser";
 import { CheckCircle2, Loader2, RotateCcw } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -20,16 +21,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { SERVICES } from "@/data/services";
 
 /**
- * Inquiry submission endpoint.
- * Configure VITE_INQUIRY_API_URL (and optionally VITE_INQUIRY_API_KEY) in the
- * project env. The fallback `/api/inquiries` is non-functional until a
- * backend is pointed at it. Request/response contract is documented in the
- * README ("Inquiry API" section).
+ * EmailJS credentials — set these in .env.local for local dev
+ * and in the Vercel dashboard for production.
+ *
+ *   VITE_EMAILJS_SERVICE_ID   — from EmailJS → Email Services
+ *   VITE_EMAILJS_TEMPLATE_ID  — from EmailJS → Email Templates
+ *   VITE_EMAILJS_PUBLIC_KEY   — from EmailJS → Account → Public Key
  */
-const INQUIRY_API_URL: string =
-  import.meta.env.VITE_INQUIRY_API_URL ?? "/api/inquiries";
-const INQUIRY_API_KEY: string | undefined = import.meta.env
-  .VITE_INQUIRY_API_KEY;
+const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID  as string;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string;
+const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY  as string;
 
 const BUDGET_RANGES = [
   "Under Br 50,000",
@@ -106,24 +107,22 @@ export function InquiryForm({
   async function onSubmit(values: InquiryValues) {
     setState({ status: "submitting" });
     try {
-      const headers: Record<string, string> = {
-        "Content-Type": "application/json",
-      };
-      if (INQUIRY_API_KEY) {
-        headers["x-api-key"] = INQUIRY_API_KEY;
-      }
-      const response = await fetch(INQUIRY_API_URL, {
-        method: "POST",
-        headers,
-        body: JSON.stringify({
-          ...values,
-          budgetRange: values.budgetRange || undefined,
-          submittedAt: new Date().toISOString(),
-        }),
-      });
-      if (!response.ok) {
-        throw new Error(`Request failed with status ${response.status}`);
-      }
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name:    values.name,
+          from_email:   values.email,
+          from_phone:   values.phone,
+          service_type: values.serviceType,
+          project_date: values.projectDate,
+          location:     values.location,
+          budget_range: values.budgetRange || "Not specified",
+          message:      values.description,
+          submitted_at: new Date().toLocaleString("en-ET", { timeZone: "Africa/Addis_Ababa" }),
+        },
+        { publicKey: EMAILJS_PUBLIC_KEY },
+      );
       setState({ status: "success" });
       form.reset();
     } catch {
