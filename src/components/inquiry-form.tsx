@@ -24,13 +24,19 @@ import { SERVICES } from "@/data/services";
  * EmailJS credentials — set these in .env.local for local dev
  * and in the Vercel dashboard for production.
  *
- *   VITE_EMAILJS_SERVICE_ID   — from EmailJS → Email Services
- *   VITE_EMAILJS_TEMPLATE_ID  — from EmailJS → Email Templates
- *   VITE_EMAILJS_PUBLIC_KEY   — from EmailJS → Account → Public Key
+ *   VITE_EMAILJS_SERVICE_ID          — from EmailJS → Email Services
+ *   VITE_EMAILJS_TEMPLATE_ID         — from EmailJS → Email Templates (inquiry notification)
+ *   VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID — from EmailJS → Email Templates (client auto-reply)
+ *   VITE_EMAILJS_PUBLIC_KEY          — from EmailJS → Account → Public Key
  */
 const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID  as string;
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string;
 const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY  as string;
+
+// Initialize EmailJS SDK with the public key once at module load.
+// This is required for EmailJS v4 and ensures every send() call
+// is authenticated without needing to pass publicKey repeatedly.
+emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 
 const BUDGET_RANGES = [
   "Under Br 50,000",
@@ -106,27 +112,30 @@ export function InquiryForm({
 
   async function onSubmit(values: InquiryValues) {
     setState({ status: "submitting" });
+
+    // Shared fields used by both the notification and the auto-reply templates.
+    const sharedParams = {
+      from_name:    values.name,
+      from_email:   values.email,
+      from_phone:   values.phone,
+      service_type: values.serviceType,
+      project_date: values.projectDate,
+      location:     values.location,
+      budget_range: values.budgetRange || "Not specified",
+      message:      values.description,
+      submitted_at: new Date().toLocaleString("en-ET", { timeZone: "Africa/Addis_Ababa" }),
+      // Notification recipient — used by the EmailJS template "To Email" field as {{to_email}}
+      to_email:     "vortexvisualinfo@gmail.com",
+      to_name:      "Vortex Visual",
+    };
+
     try {
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          from_name:    values.name,
-          from_email:   values.email,
-          from_phone:   values.phone,
-          service_type: values.serviceType,
-          project_date: values.projectDate,
-          location:     values.location,
-          budget_range: values.budgetRange || "Not specified",
-          message:      values.description,
-          submitted_at: new Date().toLocaleString("en-ET", { timeZone: "Africa/Addis_Ababa" }),
-        },
-        { publicKey: EMAILJS_PUBLIC_KEY },
-      );
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, sharedParams);
       setState({ status: "success" });
       form.reset();
-    } catch {
-      // Intentionally no console logging — the payload contains PII.
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : String(error);
+      console.error("EmailJS submission failed:", msg);
       setState({
         status: "error",
         message:
