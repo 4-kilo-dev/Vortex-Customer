@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { SERVICES } from "@/data/services";
+import { CONTACT } from "@/lib/site";
 
 /**
  * EmailJS credentials — set these in .env.local for local dev
@@ -31,6 +32,8 @@ import { SERVICES } from "@/data/services";
  */
 const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID  as string;
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string;
+const EMAILJS_AUTOREPLY_TEMPLATE_ID = import.meta.env
+  .VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID as string | undefined;
 const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY  as string;
 
 // Initialize EmailJS SDK with the public key once at module load.
@@ -125,12 +128,20 @@ export function InquiryForm({
       message:      values.description,
       submitted_at: new Date().toLocaleString("en-ET", { timeZone: "Africa/Addis_Ababa" }),
       // Notification recipient — used by the EmailJS template "To Email" field as {{to_email}}
-      to_email:     "vortexvisualinfo@gmail.com",
+      to_email:     CONTACT.email,
       to_name:      "Vortex Visual",
     };
 
     try {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, sharedParams);
+      if (EMAILJS_AUTOREPLY_TEMPLATE_ID) {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_AUTOREPLY_TEMPLATE_ID, {
+          ...sharedParams,
+          to_email: values.email,
+          to_name: values.name,
+          business_email: CONTACT.email,
+        });
+      }
       setState({ status: "success" });
       form.reset();
     } catch (error: unknown) {
