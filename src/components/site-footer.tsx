@@ -13,6 +13,7 @@ const FOOTER_NAV = [
   { to: "/partnerships", label: "Partnerships" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
+  { to: "/privacy", label: "Privacy" },
 ] as const;
 
 export function SiteFooter() {
